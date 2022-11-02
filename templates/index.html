@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Cambio EUR-USD</title>
+</head>
+<body>
+	<h1 align=center>Conversión cotización entre euro y dolar (€ - $)<h1>
+	{% if session['name'] %}
+		<h3 align=center>
+			<div><p>Sesión con el usuario {{ session['name'] }}</div></p>
+			<div><p><a href="logout">SALIDA</a></p></div></h3>
+        	<div>
+            		<h3 align=center><form action="medialocal" method="post">
+                		<input type="submit" value="Media Local">
+			</form>
+			<form action="mediaremoto" method="post">
+				<input type="submit" value="Media Remoto">
+			</form>
+			<form action="graficasexternas" method="post">
+				<input type="submit" value="Graficas Externas">
+			</form></h3>
+			<h4 align=center><form action="umbralhistorico" method="post">
+				Umbral Historico: <input type="number" step=".0001" name="umbralhist"/>
+				<input type="submit" value="Mostrar"/>
+			</form></h4>
+
+        	</div>
+		<h4 align=center>
+        		<p>Medias solicitadas en Local: {{ medias_local }}</p>
+        		<p>Medias solicitadas en Remoto: {{ medias_remoto }}</p></h4>
+    	{% endif %}
+    	{% if media %}
+        		<h4 align=center><p>La media solicitada es {{ media }}</p></h4>
+    	{% endif %}
+	{% if umbral %}
+		<h4 align=center><p>Los ultimos valores que superan el umbral son: </p></h3>
+			<h5 align=center><p>&nbsp;&nbsp;&nbsp; - &nbsp; Cotizacion: {{umbral_historico[0]}} &nbsp; a las {{tiempos[0]}} &nbsp; del {{fechas[0]}}</p>
+    			{% if umbral_historico[1] %}			
+			<p>&nbsp;&nbsp;&nbsp; - &nbsp; Cotizacion: {{umbral_historico[1]}} &nbsp; a las {{tiempos[1]}} &nbsp; del {{fechas[1]}}</p>
+			{% endif %}
+    			{% if umbral_historico[2] %}
+			<p>&nbsp;&nbsp;&nbsp; - &nbsp; Cotizacion: {{umbral_historico[2]}} &nbsp; a las {{tiempos[2]}} &nbsp; del {{fechas[2]}}</p>
+			{% endif %}
+    			{% if umbral_historico[3] %}
+			<p>&nbsp;&nbsp;&nbsp; - &nbsp; Cotizacion: {{umbral_historico[3]}} &nbsp; a las {{tiempos[3]}} &nbsp; del {{fechas[3]}}</p>
+			{% endif %}
+    			{% if umbral_historico[4] %}
+			<p>&nbsp;&nbsp;&nbsp; - &nbsp; Cotizacion: {{umbral_historico[4]}} &nbsp; a las {{tiempos[4]}} &nbsp; del {{fechas[4]}}</p></h5>
+			{% endif %}
+    	{% endif %}
+	{% if noumbral %}
+		<h4 align=center><font color="red">No existen cotizaciones por encima del umbral indicado por el usuario</h4>
+    	{% endif %}
+    	<h4 align=center><font color="black">El valor en estos momentos es de: {{ cambio }}</h4>
+    	{% if not session['name'] %}
+        		<h3 align=center><a href="registro">REGISTRO</a>
+        		<a href="login">ENTRADA</a></h3>
+    	{% endif %}
+</body>
+</html>
